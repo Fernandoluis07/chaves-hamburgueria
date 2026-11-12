@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chaves Hamburgueria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Luckiest+Guy&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tijolo:#b5532f; --tijolo2:#9c4426; --creme:#fbf1dc; --creme2:#f3e2bd; --madeira:#7a4a26;
+    --verde:#3f7a3a; --verde2:#2f5f2b; --amarelo:#f6c431; --vermelho:#d23a2a; --azul:#24508f; --tinta:#2b1a10;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Nunito,sans-serif;color:var(--tinta);background:var(--creme)}
+  button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  img{display:block}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .bang{font-family:Bangers,cursive;letter-spacing:1px;font-weight:400}
+
+  /* ---------- topo ---------- */
+  .topo{position:sticky;top:0;z-index:30;background:var(--verde);border-bottom:6px solid var(--amarelo);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .topo .wrap{display:flex;align-items:center;justify-content:space-between;height:78px;gap:20px}
+  .logo{display:flex;align-items:center;gap:12px;color:#fff}
+  .marca{position:relative;width:170px;padding-top:4px}
+  .letreiro{display:block;width:170px;height:60px;overflow:visible}
+  .marca .chapeu{position:absolute;left:39px;top:3px;width:42px;height:30px;transform:rotate(-6deg);filter:drop-shadow(1px 2px 0 rgba(0,0,0,.35))}
+  .marca small{display:block;margin-top:-6px;padding-left:8px;font-family:Bangers,cursive;font-size:16px;color:#fff;letter-spacing:4.5px;text-shadow:2px 2px 0 var(--tinta)}
+  .barril-logo{filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+  .menu{display:flex;gap:26px;font-weight:800;color:#fff}
+  .menu a{color:#fff;text-decoration:none;padding:4px 0;border-bottom:3px solid transparent}
+  .menu a:hover{border-color:var(--amarelo)}
+  .sacola{display:flex;align-items:center;gap:10px;background:var(--amarelo);color:var(--tinta);font-weight:900;padding:10px 18px;border-radius:30px;box-shadow:3px 3px 0 var(--tinta);transition:transform .15s}
+  .sacola:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--tinta)}
+  .sacola .qtd{background:var(--vermelho);color:#fff;border-radius:20px;min-width:24px;height:24px;display:grid;place-items:center;font-size:13px;padding:0 6px}
+  .sacola.pula{animation:pula .45s}
+  @keyframes pula{30%{transform:scale(1.15) rotate(-3deg)}60%{transform:scale(.95)}}
+
+  /* ---------- banner ---------- */
+  .banner{position:relative;overflow:hidden;
+    background:
+      repeating-linear-gradient(0deg,transparent 0 34px,#8d3c1f 34px 38px),
+      repeating-linear-gradient(90deg,transparent 0 70px,#8d3c1f 70px 74px),
+      var(--tijolo)}
+  .banner .wrap{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:40px;padding-top:46px;padding-bottom:46px}
+  .placa{background:var(--creme);border:6px solid var(--madeira);border-radius:16px;padding:30px 34px;box-shadow:8px 8px 0 rgba(0,0,0,.35);transform:rotate(-1.2deg)}
+  .etq{display:inline-block;background:var(--vermelho);color:#fff;font-weight:900;font-size:13px;padding:5px 12px;border-radius:20px;letter-spacing:1px}
+  .placa h2{font-size:58px;line-height:.98;margin:12px 0 10px;color:var(--verde)}
+  .placa p{font-size:18px;font-weight:700}
+  .acoes{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--vermelho);color:#fff;font-weight:900;font-size:17px;padding:13px 26px;border-radius:30px;box-shadow:3px 3px 0 var(--tinta);transition:transform .15s,box-shadow .15s;text-decoration:none}
+  .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--tinta)}
+  .btn.claro{background:#fff;color:var(--tinta);border:2px solid var(--tinta)}
+  .btn.am{background:var(--amarelo);color:var(--tinta)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .destaque{position:relative;justify-self:center}
+  .destaque .foto{width:430px;height:430px;border-radius:50%;overflow:hidden;border:10px solid var(--creme);box-shadow:10px 10px 0 rgba(0,0,0,.35)}
+  .destaque .foto img{width:100%;height:100%;object-fit:cover}
+  .destaque .estrela{position:absolute;top:10px;right:-6px;width:130px;height:130px;background:var(--amarelo);border:4px solid var(--tinta);border-radius:50%;display:grid;place-items:center;text-align:center;transform:rotate(10deg);box-shadow:4px 4px 0 var(--tinta)}
+  .destaque .estrela b{font-family:Bangers,cursive;font-size:22px;line-height:1;font-weight:400}
+  .destaque .estrela span{font-weight:900;font-size:22px;color:var(--vermelho)}
+  .destaque .nome{position:absolute;bottom:20px;left:-20px;background:var(--verde);color:#fff;border:4px solid var(--tinta);padding:8px 18px;border-radius:14px;transform:rotate(-4deg);box-shadow:4px 4px 0 var(--tinta)}
+  .destaque .nome b{font-family:Bangers,cursive;font-size:28px;letter-spacing:1px;font-weight:400;display:block;line-height:1}
+  .destaque .nome small{font-weight:800;font-size:13px}
+
+  .faixa{background:var(--amarelo);border-top:4px solid var(--tinta);border-bottom:4px solid var(--tinta);overflow:hidden;white-space:nowrap}
+  .faixa div{display:inline-block;padding:11px 0;font-weight:900;font-size:17px;animation:corre 30s linear infinite}
+  .faixa span{margin:0 26px}
+  @keyframes corre{to{transform:translateX(-50%)}}
+
+  /* ---------- cardápio ---------- */
+  .secao{padding:56px 0 30px}
+  .titulo{text-align:center;margin-bottom:26px}
+  .titulo h3{font-size:50px;color:var(--tijolo2);line-height:1}
+  .titulo p{font-weight:700;color:#6b5040;margin-top:4px}
+  .abas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+  .aba{background:#fff;border:3px solid var(--tinta);border-radius:30px;padding:9px 20px;font-weight:900;font-size:15px;box-shadow:3px 3px 0 var(--tinta);transition:all .15s}
+  .aba:hover{transform:translate(-1px,-1px)}
+  .aba.on{background:var(--verde);color:#fff}
+  .aba .n{display:inline-block;margin-left:6px;background:var(--creme2);color:var(--tinta);border-radius:10px;padding:0 8px;font-size:12px}
+  .aba.on .n{background:var(--amarelo)}
+  .grade{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;min-height:440px}
+  .card{background:#fff;border:3px solid var(--tinta);border-radius:18px;overflow:hidden;box-shadow:5px 5px 0 var(--tinta);display:flex;flex-direction:column;position:relative;cursor:pointer;transition:transform .18s,box-shadow .18s;animation:entra .35s both}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--tinta)}
+  @keyframes entra{from{opacity:0;transform:translateY(14px)}}
+  .card .img{height:200px;overflow:hidden;background:var(--creme2)}
+  .card .img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .card:hover .img img{transform:scale(1.06)}
+  .selo{position:absolute;top:12px;left:12px;background:var(--vermelho);color:#fff;font-weight:900;font-size:12px;padding:4px 11px;border-radius:20px;border:2px solid var(--tinta);transform:rotate(-4deg);z-index:2}
+  .selo.az{background:var(--azul)} .selo.vd{background:var(--verde)} .selo.am{background:var(--amarelo);color:var(--tinta)}
+  .info{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;border-top:3px dashed #e3cfa6}
+  .info h4{font-size:27px;color:var(--verde);line-height:1}
+  .frase{font-style:italic;font-weight:700;font-size:13px;color:#8a5a3a;margin:5px 0 8px}
+  .ing{font-size:13.5px;line-height:1.4;flex:1;color:#4a3426}
+  .rodape-card{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+  .preco{font-weight:900;font-size:23px;color:var(--vermelho)}
+  .add{background:var(--amarelo);border:2px solid var(--tinta);font-weight:900;font-size:14px;padding:7px 14px;border-radius:20px;box-shadow:2px 2px 0 var(--tinta)}
+
+  /* como funciona */
+  .passos{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:30px 0 10px}
+  .passo{background:var(--creme2);border:3px solid var(--tinta);border-radius:18px;padding:22px;display:flex;gap:16px;align-items:center}
+  .passo .num{flex:none;width:54px;height:54px;border-radius:50%;background:var(--vermelho);color:#fff;display:grid;place-items:center;font-family:Bangers,cursive;font-size:30px;border:3px solid var(--tinta)}
+  .passo b{display:block;font-size:18px;font-weight:900}
+  .passo span{font-size:14px;color:#5a4030}
+
+  /* ---------- rodapé ---------- */
+  footer{margin-top:50px;background:var(--madeira);color:#fbe9c9;padding:44px 0 22px;border-top:8px solid var(--amarelo)}
+  .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px}
+  footer h5{font-family:Bangers,cursive;font-size:26px;color:var(--amarelo);letter-spacing:1px;margin-bottom:8px;font-weight:400}
+  footer p{font-size:15px;line-height:1.65}
+  .copy{margin-top:28px;padding-top:14px;border-top:2px dashed rgba(255,255,255,.3);text-align:center;font-size:13px;opacity:.85}
+
+  /* ---------- janelas (produto / checkout) ---------- */
+  .fundo{position:fixed;inset:0;background:rgba(43,26,16,.6);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+  .fundo.on{display:flex;animation:aparece .2s}
+  @keyframes aparece{from{opacity:0}}
+  .janela{background:var(--creme);border:4px solid var(--tinta);border-radius:22px;box-shadow:10px 10px 0 var(--tinta);width:100%;max-height:92vh;overflow:auto;position:relative;animation:sobe .25s}
+  @keyframes sobe{from{transform:translateY(30px);opacity:0}}
+  .fechar{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;background:#fff;border:3px solid var(--tinta);font-weight:900;font-size:18px;z-index:3}
+  /* produto */
+  .prod{max-width:900px;display:grid;grid-template-columns:1fr 1fr}
+  .prod .foto{position:relative;min-height:100%;background:var(--creme2)}
+  .prod .foto img{width:100%;height:100%;object-fit:cover;min-height:420px}
+  .prod .corpo{padding:30px 28px 24px;display:flex;flex-direction:column}
+  .prod h4{font-size:44px;color:var(--verde);line-height:1;margin-top:8px}
+  .prod .frase{font-size:15px}
+  .prod .ing{flex:none;font-size:15px;margin-bottom:16px}
+  .bloco{margin-bottom:16px}
+  .bloco h6{font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--tijolo2);margin-bottom:8px}
+  .extra{display:flex;align-items:center;justify-content:space-between;background:#fff;border:2px solid #e3cfa6;border-radius:12px;padding:9px 12px;margin-bottom:7px;cursor:pointer;font-weight:700}
+  .extra input{width:18px;height:18px;accent-color:var(--verde);margin-right:10px}
+  .extra label{display:flex;align-items:center;cursor:pointer;flex:1}
+  .extra em{font-style:normal;font-weight:900;color:var(--verde)}
+  textarea,input[type=text],input[type=tel]{width:100%;border:2px solid #d8c299;border-radius:12px;padding:10px 12px;font:inherit;font-size:15px;background:#fff;resize:none}
+  textarea:focus,input:focus{outline:none;border-color:var(--verde)}
+  .rodape-prod{display:flex;gap:12px;align-items:center;margin-top:auto;padding-top:8px}
+  .qtd-box{display:flex;align-items:center;border:3px solid var(--tinta);border-radius:30px;background:#fff;overflow:hidden}
+  .qtd-box button{width:40px;height:44px;font-weight:900;font-size:20px}
+  .qtd-box button:hover{background:var(--creme2)}
+  .qtd-box span{min-width:30px;text-align:center;font-weight:900;font-size:17px}
+  .rodape-prod .btn{flex:1;justify-content:space-between}
+
+  /* sacola lateral */
+  .gaveta{position:fixed;top:0;right:0;height:100%;width:420px;max-width:100%;background:var(--creme);border-left:4px solid var(--tinta);z-index:60;transform:translateX(105%);transition:transform .3s;display:flex;flex-direction:column}
+  .gaveta.on{transform:none}
+  .sombra{position:fixed;inset:0;background:rgba(43,26,16,.5);z-index:55;display:none}
+  .sombra.on{display:block}
+  .gaveta header{background:var(--verde);color:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:4px solid var(--amarelo)}
+  .gaveta header h4{font-size:32px;color:var(--amarelo);text-shadow:2px 2px 0 var(--tinta)}
+  .gaveta header button{color:#fff;font-size:26px;font-weight:900}
+  .itens{flex:1;overflow:auto;padding:16px}
+  .item{display:flex;gap:12px;background:#fff;border:2px solid var(--tinta);border-radius:14px;padding:10px;margin-bottom:12px}
+  .item img{width:72px;height:72px;border-radius:10px;object-fit:cover}
+  .item .meio{flex:1;min-width:0}
+  .item b{font-weight:900;display:block}
+  .item small{display:block;font-size:12.5px;color:#7a5a44;line-height:1.35}
+  .item .lin{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+  .item .mini{display:flex;align-items:center;border:2px solid var(--tinta);border-radius:20px}
+  .item .mini button{width:28px;height:28px;font-weight:900}
+  .item .mini span{min-width:22px;text-align:center;font-weight:900;font-size:14px}
+  .item .v{font-weight:900;color:var(--vermelho)}
+  .vazio{text-align:center;padding:50px 20px;color:#7a5a44;font-weight:700}
+  .vazio .barrilzinho{font-size:64px}
+  .vazio b{display:block;font-family:Bangers,cursive;font-size:30px;color:var(--tijolo2);font-weight:400;letter-spacing:1px;margin:10px 0 4px}
+  .totais{padding:16px 20px 20px;border-top:3px dashed #d8c299;background:#fff}
+  .totais .l{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+  .totais .l.t{font-weight:900;font-size:21px;margin:10px 0 14px}
+  .totais .l.t span:last-child{color:var(--vermelho)}
+  .barra{height:10px;background:var(--creme2);border-radius:10px;overflow:hidden;margin:4px 0 6px;border:2px solid var(--tinta)}
+  .barra i{display:block;height:100%;background:var(--verde);transition:width .3s}
+  .dica{font-size:13px;font-weight:800;color:var(--verde2);margin-bottom:10px}
+  .totais .btn{width:100%;justify-content:center}
+
+  /* checkout */
+  .check{max-width:640px;padding:30px 30px 26px}
+  .etapas{display:flex;gap:8px;margin:4px 0 22px}
+  .etapas div{flex:1;text-align:center;font-weight:900;font-size:13px;padding:8px 4px;border-radius:12px;background:var(--creme2);color:#8a6a50;border:2px solid transparent}
+  .etapas div.on{background:var(--verde);color:#fff;border-color:var(--tinta)}
+  .etapas div.ok{background:#d9ecd2;color:var(--verde2)}
+  .check h4{font-size:36px;color:var(--verde);margin-bottom:14px}
+  .campos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .campos .full{grid-column:1/-1}
+  .campo label{display:block;font-weight:900;font-size:13px;margin-bottom:5px}
+  .campo.erro input{border-color:var(--vermelho);background:#fff3f1}
+  .opcoes{display:grid;gap:10px}
+  .opcao{display:flex;gap:14px;align-items:center;background:#fff;border:3px solid #e3cfa6;border-radius:14px;padding:14px 16px;cursor:pointer;font-weight:800}
+  .opcao.on{border-color:var(--verde);background:#f1f8ec}
+  .opcao .ic{font-size:26px}
+  .opcao small{display:block;font-weight:600;color:#7a5a44;font-size:13px}
+  .opcao input{display:none}
+  .navcheck{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+  .resumo{background:#fff;border:2px solid var(--tinta);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+  .resumo .l{display:flex;justify-content:space-between;font-size:14.5px;padding:3px 0}
+  .resumo .l.t{border-top:2px dashed #d8c299;margin-top:8px;padding-top:10px;font-weight:900;font-size:19px}
+  .resumo .l.t span:last-child{color:var(--vermelho)}
+  .resumo h6{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:var(--tijolo2);margin-bottom:6px}
+  .resumo p{font-size:14.5px;line-height:1.5}
+  /* confirmado */
+  .ok-tela{text-align:center}
+  .ok-tela .grande{font-size:64px;line-height:1}
+  .ok-tela h4{font-size:44px;margin:8px 0 4px}
+  .ok-tela .pedido{display:inline-block;background:var(--amarelo);border:3px solid var(--tinta);border-radius:12px;padding:6px 16px;font-weight:900;font-size:18px;margin:8px 0 18px}
+  .linha-tempo{text-align:left;background:#fff;border:2px solid var(--tinta);border-radius:16px;padding:18px 20px;margin-bottom:18px}
+  .ponto{display:flex;gap:14px;align-items:flex-start;position:relative;padding-bottom:16px;opacity:.4;transition:opacity .4s}
+  .ponto:last-child{padding-bottom:0}
+  .ponto:not(:last-child):after{content:"";position:absolute;left:15px;top:34px;bottom:2px;width:3px;background:#e3cfa6}
+  .ponto .bol{flex:none;width:33px;height:33px;border-radius:50%;background:var(--creme2);border:3px solid var(--tinta);display:grid;place-items:center;font-size:15px}
+  .ponto.on{opacity:1}
+  .ponto.on .bol{background:var(--verde)}
+  .ponto b{display:block;font-weight:900}
+  .ponto span{font-size:13.5px;color:#7a5a44}
+
+  /* aviso */
+  .aviso{position:fixed;left:50%;bottom:26px;transform:translate(-50%,200px);background:var(--tinta);color:#fff;font-weight:800;padding:13px 22px;border-radius:30px;z-index:80;transition:transform .3s;display:flex;gap:10px;align-items:center;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+  .aviso.on{transform:translate(-50%,0)}
+  .aviso b{color:var(--amarelo)}
+
+  /* ---------- celular ---------- */
+  @media (max-width:980px){
+    .menu{display:none}
+    .banner .wrap{grid-template-columns:1fr}
+    .destaque .foto{width:320px;height:320px}
+    .grade{grid-template-columns:repeat(2,1fr)}
+    .passos{grid-template-columns:1fr}
+    .cols{grid-template-columns:1fr 1fr}
+    .prod{grid-template-columns:1fr}
+    .prod .foto img{min-height:240px;max-height:280px}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px}
+    .barril-logo{width:44px;height:50px}
+    .marca{transform:scale(.82);transform-origin:left center;margin-right:-30px}
+    .sacola .txt{display:none}
+    .placa{padding:22px 20px}
+    .placa h2{font-size:40px}
+    .destaque .foto{width:260px;height:260px}
+    .destaque .estrela{width:100px;height:100px}
+    .destaque .estrela b{font-size:17px}.destaque .estrela span{font-size:17px}
+    .grade{grid-template-columns:1fr}
+    .cols{grid-template-columns:1fr}
+    .campos{grid-template-columns:1fr}
+    .check{padding:26px 18px 20px}
+    .etapas div{font-size:11px}
+  }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap">
+    <div class="logo">
+      <svg class="barril-logo" width="58" height="64" viewBox="0 0 100 112" aria-hidden="true">
+        <defs>
+          <linearGradient id="bMad" x1="0" x2="1">
+            <stop offset="0" stop-color="#5a2f10"/><stop offset=".18" stop-color="#9a5a26"/><stop offset=".38" stop-color="#d0904c"/>
+            <stop offset=".5" stop-color="#c7853f"/><stop offset=".78" stop-color="#8a4f20"/><stop offset="1" stop-color="#4a250b"/>
+          </linearGradient>
+          <linearGradient id="bAro" x1="0" x2="1">
+            <stop offset="0" stop-color="#151515"/><stop offset=".3" stop-color="#4d4c49"/><stop offset=".42" stop-color="#8f8b83"/>
+            <stop offset=".55" stop-color="#4d4c49"/><stop offset="1" stop-color="#111"/>
+          </linearGradient>
+          <radialGradient id="bDentro" cx=".5" cy=".35" r=".7">
+            <stop offset="0" stop-color="#5a3313"/><stop offset=".7" stop-color="#2e1706"/><stop offset="1" stop-color="#1a0c02"/>
+          </radialGradient>
+          <linearGradient id="bBorda" x1="0" x2="1">
+            <stop offset="0" stop-color="#8a5226"/><stop offset=".45" stop-color="#e3aa66"/><stop offset="1" stop-color="#7a4419"/>
+          </linearGradient>
+          <clipPath id="bCorpo"><path d="M14 18 Q1 60 14 102 L86 102 Q99 60 86 18 Z"/></clipPath>
+        </defs>
+        <ellipse cx="50" cy="104" rx="40" ry="6" fill="rgba(0,0,0,.35)"/>
+        <path d="M14 18 Q1 60 14 102 L86 102 Q99 60 86 18 Z" fill="url(#bMad)"/>
+        <g clip-path="url(#bCorpo)">
+          <g stroke="#f3c48a" stroke-width="2.2" fill="none" opacity=".28"><path d="M17.0 22 Q-2.8 60 17.0 98"/><path d="M26.0 22 Q11.8 60 26.0 98"/><path d="M35.0 22 Q26.2 60 35.0 98"/><path d="M44.0 22 Q40.8 60 44.0 98"/><path d="M53.0 22 Q55.2 60 53.0 98"/><path d="M62.0 22 Q69.8 60 62.0 98"/><path d="M71.0 22 Q84.2 60 71.0 98"/><path d="M80.0 22 Q98.8 60 80.0 98"/></g>
+          <g stroke="#3a1c07" stroke-width="1.3" fill="none" opacity=".85"><path d="M23.0 18 Q6.5 60 23.0 102"/><path d="M32.0 18 Q21.0 60 32.0 102"/><path d="M41.0 18 Q35.5 60 41.0 102"/><path d="M50.0 18 Q50.0 60 50.0 102"/><path d="M59.0 18 Q64.5 60 59.0 102"/><path d="M68.0 18 Q79.0 60 68.0 102"/><path d="M77.0 18 Q93.5 60 77.0 102"/></g>
+          <ellipse cx="50" cy="102" rx="40" ry="9" fill="#3a1c07" opacity=".55"/>
+          <path d="M0 26 Q50 33 100 26 V34 Q50 41 0 34 Z" fill="url(#bAro)" stroke="#1a1a1a" stroke-width="1"/><path d="M0 27.6 Q50 34.6 100 27.6" stroke="#d6d2c8" stroke-width="1.1" fill="none" opacity=".55"/><path d="M0 46 Q50 53 100 46 V54 Q50 61 0 54 Z" fill="url(#bAro)" stroke="#1a1a1a" stroke-width="1"/><path d="M0 47.6 Q50 54.6 100 47.6" stroke="#d6d2c8" stroke-width="1.1" fill="none" opacity=".55"/><path d="M0 70 Q50 77 100 70 V78 Q50 85 0 78 Z" fill="url(#bAro)" stroke="#1a1a1a" stroke-width="1"/><path d="M0 71.6 Q50 78.6 100 71.6" stroke="#d6d2c8" stroke-width="1.1" fill="none" opacity=".55"/><path d="M0 90 Q50 97 100 90 V98 Q50 105 0 98 Z" fill="url(#bAro)" stroke="#1a1a1a" stroke-width="1"/><path d="M0 91.6 Q50 98.6 100 91.6" stroke="#d6d2c8" stroke-width="1.1" fill="none" opacity=".55"/>
+        </g>
+        <circle cx="12" cy="32" r="1.4" fill="#e3ded2" stroke="#222" stroke-width=".5"/><circle cx="88" cy="32" r="1.4" fill="#e3ded2" stroke="#222" stroke-width=".5"/><circle cx="12" cy="96" r="1.4" fill="#e3ded2" stroke="#222" stroke-width=".5"/><circle cx="88" cy="96" r="1.4" fill="#e3ded2" stroke="#222" stroke-width=".5"/>
+        <path d="M14 18 Q1 60 14 102 L86 102 Q99 60 86 18" fill="none" stroke="#2b1405" stroke-width="2"/>
+        <ellipse cx="50" cy="18" rx="37.5" ry="10" fill="url(#bAro)" stroke="#111" stroke-width="1"/>
+        <ellipse cx="50" cy="18" rx="35" ry="8.6" fill="url(#bBorda)"/>
+        <ellipse cx="50" cy="18.6" rx="29.5" ry="6.6" fill="url(#bDentro)"/>
+        <g stroke="#5a2f10" stroke-width=".9"><path d="M86.0 18.0 L80.0 18.0" /><path d="M83.3 21.4 L77.7 20.7" /><path d="M75.5 24.4 L71.2 22.9" /><path d="M63.8 26.3 L61.5 24.5" /><path d="M50.0 27.0 L50.0 25.0" /><path d="M36.2 26.3 L38.5 24.5" /><path d="M24.5 24.4 L28.8 22.9" /><path d="M16.7 21.4 L22.3 20.7" /><path d="M14.0 18.0 L20.0 18.0" /><path d="M16.7 14.6 L22.3 15.3" /><path d="M24.5 11.6 L28.8 13.1" /><path d="M36.2 9.7 L38.5 11.5" /><path d="M50.0 9.0 L50.0 11.0" /><path d="M63.8 9.7 L61.5 11.5" /><path d="M75.5 11.6 L71.2 13.1" /><path d="M83.3 14.6 L77.7 15.3" /></g>
+        <path d="M24 15 Q50 9 76 15" stroke="#fff3dc" stroke-width="1.2" fill="none" opacity=".5"/>
+      </svg>
+      <div class="marca">
+        <svg class="letreiro" viewBox="0 0 182 64" aria-label="Chaves">
+          <defs>
+            <linearGradient id="lGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffe680"/><stop offset=".45" stop-color="#f6c431"/><stop offset="1" stop-color="#e8871e"/>
+            </linearGradient>
+          </defs>
+          <text font-family="Luckiest Guy, Bangers, cursive" font-size="44" stroke="#2b1a10" stroke-width="9" stroke-linejoin="round" fill="#2b1a10"><tspan x="4" y="54" dy="2 -4 5 -4 3 -4" rotate="-7 4 -4 6 -5 7" letter-spacing="1">Chaves</tspan></text>
+          <text font-family="Luckiest Guy, Bangers, cursive" font-size="44" stroke="#2b1a10" stroke-width="8" stroke-linejoin="round" fill="#2b1a10"><tspan x="0" y="50" dy="2 -4 5 -4 3 -4" rotate="-7 4 -4 6 -5 7" letter-spacing="1">Chaves</tspan></text>
+          <text font-family="Luckiest Guy, Bangers, cursive" font-size="44"  fill="url(#lGrad)"><tspan x="0" y="50" dy="2 -4 5 -4 3 -4" rotate="-7 4 -4 6 -5 7" letter-spacing="1">Chaves</tspan></text>
+          <text font-family="Luckiest Guy, Bangers, cursive" font-size="44"  fill="none" stroke="#fff6cf" stroke-width=".8" opacity=".7"><tspan x="0" y="50" dy="2 -4 5 -4 3 -4" rotate="-7 4 -4 6 -5 7" letter-spacing="1">Chaves</tspan></text>
+        </svg>
+        <svg class="chapeu" viewBox="0 0 44 32" aria-hidden="true">
+          <defs><pattern id="xadrez" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+            <rect width="7" height="7" fill="#9a8a55"/><rect width="7" height="2.4" fill="#6f6236" opacity=".75"/><rect width="2.4" height="7" fill="#5f5530" opacity=".65"/><rect x="4.5" width=".8" height="7" fill="#c9b878" opacity=".6"/>
+          </pattern></defs>
+          <path d="M6 15 Q5 26 9 29 Q12 30 12.5 26 L12 16 Z" fill="url(#xadrez)" stroke="#2b1a10" stroke-width="1.4"/>
+          <path d="M38 15 Q39 26 35 29 Q32 30 31.5 26 L32 16 Z" fill="url(#xadrez)" stroke="#2b1a10" stroke-width="1.4"/>
+          <path d="M5 19 Q5 2 22 2 Q39 2 39 19 Q22 15 5 19 Z" fill="url(#xadrez)" stroke="#2b1a10" stroke-width="1.6"/>
+          <path d="M9 18.5 Q22 13.5 35 18.5 Q32 23 22 22.5 Q12 23 9 18.5 Z" fill="#7d6f40" stroke="#2b1a10" stroke-width="1.4"/>
+          <path d="M22 2.5 V15" stroke="#2b1a10" stroke-width=".9" opacity=".6"/>
+          <circle cx="22" cy="3" r="1.8" fill="#6f6236" stroke="#2b1a10" stroke-width=".9"/>
+        </svg>
+        <small>HAMBURGUERIA</small>
+      </div>
+    </div>
+    <nav class="menu">
+      <a href="#cardapio" data-ir="populares">Cardápio</a>
+      <a href="#cardapio" data-ir="bebidas">Bebidas</a>
+      <a href="#cardapio" data-ir="sobremesas">Sobremesas</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="sacola" id="abrirSacola" aria-label="Abrir sacola">🛍️ <span class="txt">Sacola</span> <span class="qtd" id="qtdSacola">0</span> <span id="valorSacola">R$ 0,00</span></button>
+  </div>
+</header>
+
+<section class="banner">
+  <div class="wrap">
+    <div class="placa">
+      <span class="etq">DIRETO DA VILA</span>
+      <h2 class="bang">Foi sem querer querendo… e ficou gostoso!</h2>
+      <p>Lanches com o nome da turma da vila, feitos na hora. Ninguém tem paciência pra fome!</p>
+      <div class="acoes">
+        <button class="btn" data-produto="chaves">Pedir o favorito 🍔</button>
+        <a class="btn claro" href="#cardapio">Ver cardápio</a>
+      </div>
+    </div>
+    <div class="destaque">
+      <div class="foto"><img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=900&q=75&auto=format&fit=crop" alt="Lanche Chaves"></div>
+      <div class="estrela"><div><b>Favorito<br>da casa</b><br><span>R$ 19,90</span></div></div>
+      <div class="nome"><b>Chaves</b><small>"Isso, isso, isso!"</small></div>
+    </div>
+  </div>
+</section>
+
+<div class="faixa"><div>
+  <span>🍔 Entrega na vila toda</span><span>🛵 Frete grátis acima de R$ 60</span><span>⏱️ Pronto em 30 a 40 min</span><span>🥤 Peça o refresco de tamarindo</span><span>"Ninguém tem paciência comigo!"</span>
+  <span>🍔 Entrega na vila toda</span><span>🛵 Frete grátis acima de R$ 60</span><span>⏱️ Pronto em 30 a 40 min</span><span>🥤 Peça o refresco de tamarindo</span><span>"Ninguém tem paciência comigo!"</span>
+</div></div>
+
+<main class="secao" id="cardapio">
+  <div class="wrap">
+    <div class="titulo">
+      <h3 class="bang">Cardápio da Vila</h3>
+      <p>Escolha uma categoria e toque no lanche para montar seu pedido</p>
+    </div>
+    <div class="abas" id="abas"></div>
+    <div class="grade" id="grade"></div>
+
+    <div class="passos">
+      <div class="passo"><div class="num">1</div><div><b>Escolha seu personagem</b><span>Toque no lanche e capriche nos adicionais.</span></div></div>
+      <div class="passo"><div class="num">2</div><div><b>Feche a sacola</b><span>Informe o endereço e a forma de pagamento.</span></div></div>
+      <div class="passo"><div class="num">3</div><div><b>Receba na vila</b><span>Acompanhe o pedido até chegar na sua porta.</span></div></div>
+    </div>
+  </div>
+</main>
+
+<footer id="contato">
+  <div class="wrap">
+    <div class="cols">
+      <div><h5>Chaves Hamburgueria</h5><p>Os lanches mais queridos da vila, feitos com carinho (e sem querer querendo).</p></div>
+      <div><h5>Endereço</h5><p>Vila do Chaves, casa 8<br>Bairro da Vizinhança<br>Ao lado do barril</p></div>
+      <div><h5>Horário</h5><p>Ter a Dom · 18h às 23h<br>Segunda: fechado<br>(dia de cobrar o aluguel)</p></div>
+      <div><h5>Contato</h5><p>📞 (00) 0000-0008<br>📷 @chaveshamburgueria<br>💬 Pedido pelo WhatsApp</p></div>
+    </div>
+    <div class="copy">© 2026 Chaves Hamburgueria</div>
+  </div>
+</footer>
+
+<!-- janela do produto -->
+<div class="fundo" id="janelaProduto">
+  <div class="janela prod" role="dialog" aria-modal="true">
+    <button class="fechar" data-fechar aria-label="Fechar">✕</button>
+    <div class="foto"><span class="selo" id="pSelo"></span><img id="pImg" alt=""></div>
+    <div class="corpo">
+      <h4 class="bang" id="pNome"></h4>
+      <div class="frase" id="pFrase"></div>
+      <div class="ing" id="pIng"></div>
+      <div class="bloco" id="pExtrasBloco"><h6>Turbine seu lanche</h6><div id="pExtras"></div></div>
+      <div class="bloco"><h6>Alguma observação?</h6><textarea id="pObs" rows="2" placeholder="Ex.: sem cebola, ponto da carne bem passado…"></textarea></div>
+      <div class="rodape-prod">
+        <div class="qtd-box"><button id="pMenos" aria-label="Menos">−</button><span id="pQtd">1</span><button id="pMais" aria-label="Mais">+</button></div>
+        <button class="btn" id="pAdd"><span>Adicionar</span><span id="pTotal"></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- sacola -->
+<div class="sombra" id="sombra"></div>
+<aside class="gaveta" id="gaveta" aria-label="Sacola">
+  <header><h4 class="bang">Sua sacola</h4><button id="fecharSacola" aria-label="Fechar sacola">✕</button></header>
+  <div class="itens" id="itens"></div>
+  <div class="totais" id="totais"></div>
+</aside>
+
+<!-- checkout -->
+<div class="fundo" id="janelaCheck">
+  <div class="janela check" role="dialog" aria-modal="true">
+    <button class="fechar" data-fechar aria-label="Fechar">✕</button>
+    <div id="checkConteudo"></div>
+  </div>
+</div>
+
+<div class="aviso" id="aviso"></div>
+
+<script>
+const IMG=id=>`https://images.unsplash.com/photo-${id}?w=800&q=75&auto=format&fit=crop`;
+const PRODUTOS=[
+ {id:'chaves',cat:['populares','classicos'],n:'Chaves',s:'O favorito da casa',sc:'',f:'"Isso, isso, isso!"',p:19.90,img:'1565299507177-b0ac66763828',
+  ing:'Pão de leite, presunto em dobro, queijo prato derretido, alface, tomate e maionese da casa.'},
+ {id:'barriga',cat:['populares'],n:'Seu Barriga',s:'O mais gordo',sc:'am',f:'"Tinha que ser o Chaves de novo!"',p:42.90,img:'1607013251379-e6eecfffe234',
+  ing:'Pão brioche, 3 carnes de 150g, 3 fatias de cheddar, bacon, picles, cebola e molho especial. Bem recheado!'},
+ {id:'girafales',cat:['populares','especiais'],n:'Professor Girafales',s:'O mais comprido',sc:'az',f:'"Tá… tá… tá… tá!"',p:38.90,img:'1509722747041-616f39b57569',
+  ing:'Pão baguete de 30cm, 2 carnes compridas, queijo prato, alface, tomate e molho de ervas. Elegante como ele.'},
+ {id:'quico',cat:['populares'],n:'Quico',s:'Duplo e bochechudo',sc:'',f:'"Cale-se, cale-se, você me deixa louco!"',p:32.90,img:'1572802419224-296b0aeee0d9',
+  ing:'Pão com gergelim, 2 carnes de 120g, 2 fatias de cheddar, cebola caramelizada e molho barbecue.'},
+ {id:'madruga',cat:['classicos'],n:'Seu Madruga',s:'O mais em conta',sc:'vd',f:'"Só não te dou outra porque…"',p:14.90,img:'1603064752734-4c48eff53d05',
+  ing:'Pão simples, 1 carne de 100g e queijo prato. Simples, honesto e sem dever nada.'},
+ {id:'chiquinha',cat:['classicos'],n:'Chiquinha',s:'Pequenina e esperta',sc:'',f:'"Pois é, pois é, pois é!"',p:16.90,img:'1550547660-d9450f859349',
+  ing:'Dois mini lanches no pão de leite, carne de 80g, queijo, picles e ketchup. Tamanho de criança, sabor de gente grande.'},
+ {id:'jaiminho',cat:['classicos'],n:'Jaiminho',s:'Pra evitar a fadiga',sc:'vd',f:'"É que eu quero evitar a fadiga."',p:24.90,img:'1551782450-17144efb9c50',
+  ing:'Pão com gergelim, carne de 120g, queijo, bacon e maionese, com batata frita. Sai rapidinho, sem cansar ninguém.'},
+ {id:'nhonho',cat:['classicos'],n:'Nhonho',s:'O mini Barriga',sc:'am',f:'"Papai, eu quero mais um!"',p:27.90,img:'1553979459-d2229ba7433b',
+  ing:'Pão brioche, 2 carnes de 100g, cheddar duplo, bacon e molho da casa. Gordinho como o pai.'},
+ {id:'florinda',cat:['especiais'],n:'Dona Florinda',s:'O chique da casa',sc:'az',f:'"Vamos, tesouro, não se misture com essa gentalha!"',p:39.90,img:'1596662951482-0c4ba74a6df6',
+  ing:'Pão australiano, carne angus de 180g, queijo brie, rúcula, tomate seco e geleia de pimenta.'},
+ {id:'bruxa',cat:['especiais'],n:'Bruxa do 71',s:'Apimentado',sc:'',f:'"Ai, Seu Madruga…"',p:31.90,img:'1582196016295-f8c8bd4b3a99',
+  ing:'Pão preto, carne de 150g, queijo pepper jack, cebola roxa, jalapeño e molho de pimenta "enfeitiçado".'},
+ {id:'refresco',cat:['bebidas'],n:'Refresco de Tamarindo',s:'Bebida',sc:'vd',f:'"Parece de groselha, mas tem gosto de limão!"',p:8.90,img:'1556679343-c7306c1976bc',bebida:true,
+  ing:'O clássico refresco da vila, geladinho, com gelo e limão. Copo de 500ml.'},
+ {id:'churros',cat:['sobremesas'],n:'Churros do Seu Madruga',s:'Sobremesa',sc:'',f:'"Olha o churros, olha o churros!"',p:12.90,img:'1624371414361-e670edf4898d',doce:true,
+  ing:'Porção de churros crocantes com açúcar e canela, acompanha doce de leite para mergulhar.'},
+];
+const CATS=[
+ {id:'populares',n:'⭐ Mais pedidos'},
+ {id:'classicos',n:'🏠 Clássicos da vila'},
+ {id:'especiais',n:'✨ Especiais'},
+ {id:'bebidas',n:'🥤 Bebidas'},
+ {id:'sobremesas',n:'🍩 Sobremesas'},
+];
+const EXTRAS_LANCHE=[{id:'bacon',n:'Bacon extra',p:4},{id:'queijo',n:'Queijo extra',p:3},{id:'ovo',n:'Ovo',p:2.5},{id:'carne',n:'Carne extra',p:7}];
+const EXTRAS_BEBIDA=[{id:'grande',n:'Copo grande (700ml)',p:3},{id:'semgelo',n:'Sem gelo',p:0}];
+const EXTRAS_DOCE=[{id:'chocolate',n:'Calda de chocolate',p:2.5},{id:'dobro',n:'Porção dobrada',p:9}];
+const FRETE=6.90, FRETE_GRATIS=60;
+
+const $=s=>document.querySelector(s);
+const R=v=>'R$ '+v.toFixed(2).replace('.',',');
+const porId=id=>PRODUTOS.find(p=>p.id===id);
+const extrasDe=p=>p.bebida?EXTRAS_BEBIDA:p.doce?EXTRAS_DOCE:EXTRAS_LANCHE;
+
+/* ---------- sacola (guardada no navegador) ---------- */
+let sacola=[];
+try{sacola=JSON.parse(localStorage.getItem('chaves-sacola')||'[]')}catch(e){sacola=[]}
+const salvar=()=>{try{localStorage.setItem('chaves-sacola',JSON.stringify(sacola))}catch(e){}};
+const precoItem=it=>{const p=porId(it.id);return (p.p+it.extras.reduce((s,e)=>s+(extrasDe(p).find(x=>x.id===e)?.p||0),0))*it.q};
+const subtotal=()=>sacola.reduce((s,it)=>s+precoItem(it),0);
+const frete=()=>subtotal()>=FRETE_GRATIS||!sacola.length?0:FRETE;
+
+/* ---------- abas e cards ---------- */
+let catAtual='populares';
+function desenharAbas(){
+  $('#abas').innerHTML=CATS.map(c=>`<button class="aba ${c.id===catAtual?'on':''}" data-cat="${c.id}">${c.n}<span class="n">${PRODUTOS.filter(p=>p.cat.includes(c.id)).length}</span></button>`).join('');
+}
+function desenharGrade(){
+  $('#grade').innerHTML=PRODUTOS.filter(p=>p.cat.includes(catAtual)).map((p,i)=>`
+    <article class="card" data-produto="${p.id}" style="animation-delay:${i*.06}s">
+      <span class="selo ${p.sc}">${p.s}</span>
+      <div class="img"><img src="${IMG(p.img)}" alt="${p.n}" loading="lazy"></div>
+      <div class="info">
+        <h4 class="bang">${p.n}</h4>
+        <div class="frase">${p.f}</div>
+        <div class="ing">${p.ing}</div>
+        <div class="rodape-card"><span class="preco">${R(p.p)}</span><span class="add">+ Escolher</span></div>
+      </div>
+    </article>`).join('');
+}
+function trocarCat(c){catAtual=c;desenharAbas();desenharGrade();}
+
+/* ---------- janela do produto ---------- */
+let atual=null,qtd=1;
+function abrirProduto(id){
+  atual=porId(id);qtd=1;
+  $('#pImg').src=IMG(atual.img);$('#pImg').alt=atual.n;
+  $('#pSelo').textContent=atual.s;$('#pSelo').className='selo '+atual.sc;
+  $('#pNome').textContent=atual.n;$('#pFrase').textContent=atual.f;$('#pIng').textContent=atual.ing;
+  $('#pExtrasBloco').querySelector('h6').textContent=atual.bebida?'Como você quer?':atual.doce?'Deixe mais doce':'Turbine seu lanche';
+  $('#pExtras').innerHTML=extrasDe(atual).map(e=>`<div class="extra"><label><input type="checkbox" value="${e.id}">${e.n}</label><em>${e.p?'+ '+R(e.p):'grátis'}</em></div>`).join('');
+  $('#pObs').value='';
+  atualizarProduto();
+  abrir('#janelaProduto');
+}
+function extrasMarcados(){return [...document.querySelectorAll('#pExtras input:checked')].map(i=>i.value)}
+function atualizarProduto(){
+  $('#pQtd').textContent=qtd;
+  const unit=atual.p+extrasMarcados().reduce((s,e)=>s+extrasDe(atual).find(x=>x.id===e).p,0);
+  $('#pTotal').textContent=R(unit*qtd);
+}
+$('#pExtras').addEventListener('change',atualizarProduto);
+$('#pMenos').onclick=()=>{if(qtd>1){qtd--;atualizarProduto()}};
+$('#pMais').onclick=()=>{qtd++;atualizarProduto()};
+$('#pAdd').onclick=()=>{
+  const extras=extrasMarcados().sort(),obs=$('#pObs').value.trim();
+  const igual=sacola.find(it=>it.id===atual.id&&it.extras.join()===extras.join()&&it.obs===obs);
+  if(igual)igual.q+=qtd;else sacola.push({id:atual.id,q:qtd,extras,obs});
+  salvar();fechar('#janelaProduto');atualizarSacola();
+  const b=$('#abrirSacola');b.classList.remove('pula');void b.offsetWidth;b.classList.add('pula');
+  avisar(`<b>${qtd}× ${atual.n}</b> foi pra sacola!`);
+};
+
+/* ---------- sacola lateral ---------- */
+function atualizarSacola(){
+  const n=sacola.reduce((s,it)=>s+it.q,0);
+  $('#qtdSacola').textContent=n;$('#valorSacola').textContent=R(subtotal()+frete());
+  if(!sacola.length){
+    $('#itens').innerHTML=`<div class="vazio"><div class="barrilzinho">🛢️</div><b>Sua sacola está vazia</b>Que coisa, não? Escolha um lanche da vila!</div>`;
+    $('#totais').innerHTML=`<button class="btn am" id="irCardapio">Ver cardápio</button>`;
+    $('#irCardapio').onclick=()=>{fecharSacola();location.hash='cardapio'};
+    return;
+  }
+  $('#itens').innerHTML=sacola.map((it,i)=>{const p=porId(it.id);
+    const ex=it.extras.map(e=>extrasDe(p).find(x=>x.id===e)?.n).filter(Boolean).join(', ');
+    return `<div class="item"><img src="${IMG(p.img)}" alt="${p.n}"><div class="meio"><b>${p.n}</b>${ex?`<small>+ ${ex}</small>`:''}${it.obs?`<small>Obs.: ${it.obs.replace(/</g,'&lt;')}</small>`:''}
+      <div class="lin"><div class="mini"><button data-menos="${i}">−</button><span>${it.q}</span><button data-mais="${i}">+</button></div><span class="v">${R(precoItem(it))}</span></div></div></div>`}).join('');
+  const sub=subtotal(),fr=frete(),falta=Math.max(0,FRETE_GRATIS-sub);
+  $('#totais').innerHTML=`
+    <div class="barra"><i style="width:${Math.min(100,sub/FRETE_GRATIS*100)}%"></i></div>
+    <div class="dica">${falta>0?`Faltam ${R(falta)} para o frete grátis 🛵`:'Oba! Seu frete é grátis 🎉'}</div>
+    <div class="l"><span>Subtotal</span><span>${R(sub)}</span></div>
+    <div class="l"><span>Entrega</span><span>${fr?R(fr):'Grátis'}</span></div>
+    <div class="l t"><span>Total</span><span>${R(sub+fr)}</span></div>
+    <button class="btn" id="finalizar">Finalizar pedido →</button>`;
+  $('#finalizar').onclick=()=>{fecharSacola();iniciarCheckout()};
+}
+$('#itens').addEventListener('click',e=>{
+  const m=e.target.dataset.menos,p=e.target.dataset.mais;
+  if(m!==undefined){sacola[m].q--;if(sacola[m].q<1)sacola.splice(m,1)}
+  else if(p!==undefined)sacola[p].q++;
+  else return;
+  salvar();atualizarSacola();
+});
+const abrirSacola=()=>{$('#gaveta').classList.add('on');$('#sombra').classList.add('on')};
+const fecharSacola=()=>{$('#gaveta').classList.remove('on');$('#sombra').classList.remove('on')};
+$('#abrirSacola').onclick=abrirSacola;$('#fecharSacola').onclick=fecharSacola;$('#sombra').onclick=fecharSacola;
+
+/* ---------- checkout ---------- */
+let etapa=0,dados={nome:'',tel:'',rua:'',num:'',comp:'',tipo:'entrega',pag:'pix',troco:''};
+const ETAPAS=['Entrega','Pagamento','Revisão'];
+function iniciarCheckout(){etapa=0;desenharCheckout();abrir('#janelaCheck')}
+function cabecalho(){return `<div class="etapas">${ETAPAS.map((e,i)=>`<div class="${i===etapa?'on':i<etapa?'ok':''}">${i<etapa?'✓ ':''}${i+1}. ${e}</div>`).join('')}</div>`}
+function desenharCheckout(){
+  const c=$('#checkConteudo');
+  if(etapa===0){
+    c.innerHTML=cabecalho()+`<h4 class="bang">Onde a gente entrega?</h4>
+      <div class="opcoes" style="grid-template-columns:1fr 1fr;margin-bottom:16px">
+        <label class="opcao ${dados.tipo==='entrega'?'on':''}"><input type="radio" name="tipo" value="entrega"><span class="ic">🛵</span><span>Entrega<small>30 a 40 min</small></span></label>
+        <label class="opcao ${dados.tipo==='retirar'?'on':''}"><input type="radio" name="tipo" value="retirar"><span class="ic">🛢️</span><span>Retirar na vila<small>Pronto em 20 min</small></span></label>
+      </div>
+      <div class="campos">
+        <div class="campo"><label>Seu nome</label><input type="text" id="cNome" value="${dados.nome}" placeholder="Como te chamam na vila?"></div>
+        <div class="campo"><label>Telefone</label><input type="tel" id="cTel" value="${dados.tel}" placeholder="(00) 00000-0000"></div>
+        ${dados.tipo==='entrega'?`
+        <div class="campo full"><label>Rua</label><input type="text" id="cRua" value="${dados.rua}" placeholder="Ex.: Rua da Vila"></div>
+        <div class="campo"><label>Número</label><input type="text" id="cNum" value="${dados.num}" placeholder="Ex.: 71"></div>
+        <div class="campo"><label>Complemento</label><input type="text" id="cComp" value="${dados.comp}" placeholder="Ex.: casa do barril"></div>`:
+        `<div class="campo full"><div class="resumo" style="margin:0"><h6>Endereço para retirada</h6><p>Vila do Chaves, casa 8 · ao lado do barril</p></div></div>`}
+      </div>
+      <div class="navcheck"><button class="btn claro" id="voltar">← Sacola</button><button class="btn" id="seguir">Continuar →</button></div>`;
+    c.querySelectorAll('input[name=tipo]').forEach(r=>r.onchange=()=>{guardarEntrega();dados.tipo=r.value;desenharCheckout()});
+    $('#voltar').onclick=()=>{guardarEntrega();fechar('#janelaCheck');abrirSacola()};
+    $('#seguir').onclick=()=>{guardarEntrega();if(validarEntrega()){etapa=1;desenharCheckout()}};
+  }
+  else if(etapa===1){
+    const ops=[['pix','💠','Pix','Pague na hora pelo celular'],['cartao','💳','Cartão na entrega','Débito ou crédito na maquininha'],['dinheiro','💵','Dinheiro','Se precisar de troco, avise']];
+    c.innerHTML=cabecalho()+`<h4 class="bang">Como vai pagar?</h4>
+      <div class="opcoes">${ops.map(o=>`<label class="opcao ${dados.pag===o[0]?'on':''}"><input type="radio" name="pag" value="${o[0]}"><span class="ic">${o[1]}</span><span>${o[2]}<small>${o[3]}</small></span></label>`).join('')}</div>
+      ${dados.pag==='dinheiro'?`<div class="campo" style="margin-top:12px"><label>Troco para quanto?</label><input type="text" id="cTroco" value="${dados.troco}" placeholder="Ex.: 100"></div>`:''}
+      <div class="navcheck"><button class="btn claro" id="voltar">← Voltar</button><button class="btn" id="seguir">Revisar pedido →</button></div>`;
+    c.querySelectorAll('input[name=pag]').forEach(r=>r.onchange=()=>{dados.pag=r.value;desenharCheckout()});
+    const tr=()=>{if($('#cTroco'))dados.troco=$('#cTroco').value.trim()};
+    $('#voltar').onclick=()=>{tr();etapa=0;desenharCheckout()};
+    $('#seguir').onclick=()=>{tr();etapa=2;desenharCheckout()};
+  }
+  else if(etapa===2){
+    const sub=subtotal(),fr=dados.tipo==='retirar'?0:frete();
+    const pagTxt={pix:'Pix',cartao:'Cartão na entrega',dinheiro:'Dinheiro'+(dados.troco?` (troco para R$ ${dados.troco})`:'')}[dados.pag];
+    c.innerHTML=cabecalho()+`<h4 class="bang">Confere pra gente?</h4>
+      <div class="resumo"><h6>Seu pedido</h6>
+        ${sacola.map(it=>`<div class="l"><span>${it.q}× ${porId(it.id).n}</span><span>${R(precoItem(it))}</span></div>`).join('')}
+        <div class="l"><span>Entrega</span><span>${fr?R(fr):'Grátis'}</span></div>
+        <div class="l t"><span>Total</span><span>${R(sub+fr)}</span></div>
+      </div>
+      <div class="resumo"><h6>${dados.tipo==='entrega'?'Entregar para':'Retirar na vila'}</h6><p><b>${esc(dados.nome)}</b> · ${esc(dados.tel)}<br>${dados.tipo==='entrega'?`${esc(dados.rua)}, ${esc(dados.num)}${dados.comp?' · '+esc(dados.comp):''}`:'Vila do Chaves, casa 8'}</p></div>
+      <div class="resumo"><h6>Pagamento</h6><p>${esc(pagTxt)}</p></div>
+      <div class="navcheck"><button class="btn claro" id="voltar">← Voltar</button><button class="btn" id="seguir">Confirmar pedido ✓</button></div>`;
+    $('#voltar').onclick=()=>{etapa=1;desenharCheckout()};
+    $('#seguir').onclick=confirmar;
+  }
+}
+const esc=s=>String(s).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+function guardarEntrega(){
+  const v=id=>$(id)?$(id).value.trim():'';
+  dados.nome=v('#cNome');dados.tel=v('#cTel');
+  if($('#cRua')){dados.rua=v('#cRua');dados.num=v('#cNum');dados.comp=v('#cComp')}
+}
+function validarEntrega(){
+  let ok=true;
+  const req=['#cNome','#cTel'].concat(dados.tipo==='entrega'?['#cRua','#cNum']:[]);
+  req.forEach(id=>{const campo=$(id).parentElement;const vazio=!$(id).value.trim();campo.classList.toggle('erro',vazio);if(vazio)ok=false});
+  if(!ok)avisar('Preencha os campos em vermelho 🙂');
+  return ok;
+}
+let tempos=[];
+function confirmar(){
+  const num=String(Math.floor(Math.random()*900)+100);
+  const primeiroNome=esc(dados.nome.split(' ')[0]);
+  const pontos=[
+    ['📝','Pedido recebido','A Dona Florinda já anotou tudo.'],
+    ['🔥','Na chapa','O Seu Madruga está preparando seu lanche.'],
+    [dados.tipo==='entrega'?'🛵':'🛢️',dados.tipo==='entrega'?'Saiu para entrega':'Pronto para retirar',dados.tipo==='entrega'?'O Jaiminho está a caminho (sem fadiga!).':'Pode vir buscar ao lado do barril.'],
+    ['🎉',dados.tipo==='entrega'?'Entregue':'Retirado','Bom apetite! Isso, isso, isso!'],
+  ];
+  $('#checkConteudo').innerHTML=`<div class="ok-tela">
+    <div class="grande">🍔</div>
+    <h4 class="bang" style="color:var(--verde)">Valeu, ${primeiroNome}!</h4>
+    <p style="font-weight:700">Seu pedido foi confirmado.</p>
+    <div class="pedido">Pedido nº ${num}</div>
+    <div class="linha-tempo">${pontos.map((p,i)=>`<div class="ponto ${i===0?'on':''}"><div class="bol">${p[0]}</div><div><b>${p[1]}</b><span>${p[2]}</span></div></div>`).join('')}</div>
+    <button class="btn am" id="novo">Fazer outro pedido</button>
+    
+  </div>`;
+  sacola=[];salvar();atualizarSacola();
+  tempos.forEach(clearTimeout);tempos=[];
+  const els=document.querySelectorAll('.ponto');
+  [1,2,3].forEach(i=>tempos.push(setTimeout(()=>els[i]&&els[i].classList.add('on'),i*2500)));
+  $('#novo').onclick=()=>{fechar('#janelaCheck');location.hash='cardapio'};
+}
+
+/* ---------- utilidades ---------- */
+function abrir(s){$(s).classList.add('on');document.body.style.overflow='hidden'}
+function fechar(s){$(s).classList.remove('on');document.body.style.overflow=''}
+document.querySelectorAll('.fundo').forEach(f=>f.addEventListener('click',e=>{if(e.target===f||e.target.closest('[data-fechar]'))fechar('#'+f.id)}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.fundo.on').forEach(f=>fechar('#'+f.id));fecharSacola()}});
+document.addEventListener('click',e=>{
+  const card=e.target.closest('[data-produto]');if(card){abrirProduto(card.dataset.produto);return}
+  const aba=e.target.closest('[data-cat]');if(aba){trocarCat(aba.dataset.cat);return}
+  const ir=e.target.closest('[data-ir]');if(ir)trocarCat(ir.dataset.ir);
+});
+let tAviso;
+function avisar(html){const a=$('#aviso');a.innerHTML=html;a.classList.add('on');clearTimeout(tAviso);tAviso=setTimeout(()=>a.classList.remove('on'),2400)}
+
+desenharAbas();desenharGrade();atualizarSacola();
+</script>
+</body>
+</html>
